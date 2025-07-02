@@ -17,42 +17,30 @@ A simple ASP.NET Core Web API that fixes issues with dates being saved incorrect
 
 ---
 
-## 🚀 How to Run
+## 🚀 Run and Test Locally with Docker
+
+1. Build the Docker image:
 
 ```
-git clone https://github.com/your-username/timezone-date-normalization-api.git
-cd timezone-date-normalization-api
-dotnet run
-````
-
-Open Swagger UI:
-
+docker build -t local-dotnet-utc
 ```
-https://localhost:5001/swagger
+2. Run the container on port 5000:
+```
+docker run -p 5000:5000 local-dotnet-utc
 ```
 
----
-
-## 🧪 How to Test (Postman)
-
-**URL**: `POST /api/test/test-dates`
-**Headers**:
-
+3. Open Swagger in your browser:
 ```
-Content-Type: application/json
-X-Timezone: Africa/Johannesburg
+http://localhost:5000/swagger
 ```
 
-**Body**:
+4. To test APIs needing the X-Timezone header, use Postman or another API tool, because Swagger can’t add custom headers easily.
 
-```json
-{
-  "eventTime": "2025-07-02T10:00:00",
-  "eventDate": "2025-07-02"
-}
+5. To stop the container, press Ctrl + C or run:
 ```
-
----
+docker ps
+docker stop <container_id>
+```
 
 ## 💡 Why It Matters
 
