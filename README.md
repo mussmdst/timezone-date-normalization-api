@@ -43,7 +43,64 @@ The backend stores and returns dates in **standard UTC ISO 8601 format** (e.g., 
 const utcDate = new Date("2025-07-02T08:00:00Z");
 const localDateString = utcDate.toLocaleString(); // Displays in user's local timezone
 ```
+---
 
+## ✅ Date Normalization Test Cases
+
+### ❌ Without Filter (Bug)
+
+**Request:**
+
+```
+{
+  "eventTime": "2025-07-02T10:00:00",
+  "eventDate": "2025-07-02"
+}
+```
+- Expected Timezone: Africa/Johannesburg (UTC+2)
+
+**Response:**
+```
+{
+  "serverReceived": {
+    "eventTime": "2025-07-02T10:00:00",
+    "eventDate": "2025-07-02"
+  },
+  "serverNow": "2025-07-02T21:31:02.3675393+00:00",
+  "serverUtcNow": "2025-07-02T21:31:02.3675417Z"
+}
+```
+**Problem:** 
+The server stores and returns the time exactly as sent (10:00), but interprets it as UTC instead of the user's local time. This causes a 2-hour shift in meaning — it’s actually treated as 12:00 in Johannesburg, not the intended 10:00.
+
+### ✅ With Filter (Correct Behavior)
+**Same Request:**
+```
+{
+  "eventTime": "2025-07-02T10:00:00",
+  "eventDate": "2025-07-02"
+}
+
+//Note
+Header: X-Timezone: Africa/Johannesburg
+```
+
+**Response:**
+```
+{
+  "serverReceived": {
+    "eventTime": "2025-07-02T08:00:00Z",
+    "eventDate": "2025-07-02"
+  },
+  "serverNow": "2025-07-02T21:28:22.4007827+00:00",
+  "serverUtcNow": "2025-07-02T21:28:22.4007835Z"
+}
+```
+
+**Explanation:**
+The filter interprets the 10:00 input as being in Africa/Johannesburg, and converts it to UTC 08:00 for storage. This preserves the exact intended moment across timezones. When sent back to the user, the frontend can safely convert it back to 10:00 local time.
+
+---
 ## 🚀 Run and Test Locally with Docker
 
 1. Build the Docker image:
