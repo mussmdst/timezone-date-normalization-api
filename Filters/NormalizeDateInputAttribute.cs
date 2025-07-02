@@ -104,10 +104,13 @@ namespace DateInputNormalizer.Filters
         /// </summary>
         private DateTime ReinterpretAsUserTime(DateTime input, TimeZoneInfo userTimeZone)
         {
-            // Force it to be interpreted as a local time, not UTC
+            // Treat input as local to the user's timezone, so mark as unspecified kind
             var unspecified = DateTime.SpecifyKind(input, DateTimeKind.Unspecified);
-            var adjusted = TimeZoneInfo.ConvertTime(unspecified, userTimeZone);
-            return DateTime.SpecifyKind(adjusted, DateTimeKind.Unspecified);
+
+            // Convert from user local time to UTC
+            var utcDateTime = TimeZoneInfo.ConvertTimeToUtc(unspecified, userTimeZone);
+
+            return utcDateTime;
         }
 
         /// <summary>
