@@ -132,6 +132,23 @@ ASP.NET APIs often treat dates as UTC unless told otherwise. This project ensure
 
 ---
 
+## Time Zones
+
+| Region               | IANA Timezone ID       | UTC Offset |
+|----------------------|------------------------|------------|
+| South Africa         | Africa/Johannesburg    | UTC+2      |
+| United Kingdom       | Europe/London          | UTC+0 / +1 (DST) |
+| United States (EST)  | America/New_York       | UTC-5 / -4 (DST) |
+| United States (PST)  | America/Los_Angeles    | UTC-8 / -7 (DST) |
+| Central Europe       | Europe/Berlin          | UTC+1 / +2 (DST) |
+| India                | Asia/Kolkata           | UTC+5:30   |
+| Japan                | Asia/Tokyo             | UTC+9      |
+| Australia (Sydney)   | Australia/Sydney       | UTC+10 / +11 (DST) |
+| Brazil (São Paulo)   | America/Sao_Paulo      | UTC-3      |
+| UAE                  | Asia/Dubai             | UTC+4      |
+
+---
+
 ## 🧱 Built With
 
 * ASP.NET Core 8
