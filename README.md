@@ -50,7 +50,7 @@ ASP.NET APIs often treat dates as UTC unless told otherwise. This project ensure
 
 ## 🧱 Built With
 
-* ASP.NET Core 7
+* ASP.NET Core 8
 * Action filters
 * Swagger (Swashbuckle)
 * TimeZoneInfo
