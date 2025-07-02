@@ -22,5 +22,18 @@ namespace DateInputNormalizer.Controllers
                 ServerUtcNow = DateTime.UtcNow
             });
         }
+
+        [HttpPost]
+        [Route("api/[controller]/TestDateHandlingNoFilter")]
+        [NormalizeDateInput]
+        public IActionResult TestDateHandlingNoFilter([FromBody] TestDateModel model, [FromHeader(Name = "X-Timezone")] string timeZone)
+        {
+            return Ok(new
+            {
+                ServerReceived = model,
+                ServerNow = DateTime.Now,
+                ServerUtcNow = DateTime.UtcNow
+            });
+        }
     }
 }
