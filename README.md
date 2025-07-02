@@ -70,12 +70,7 @@ ASP.NET APIs often treat dates as UTC unless told otherwise. This project ensure
 ---
 
 ## 📄 License
-
-MIT — free to use and modify.
-
-```
+MIT
 
 ---
-
-Let me know if you'd like an even shorter version or want me to include a sample response.
-```
+Made by Troy Krause
