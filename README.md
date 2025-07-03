@@ -5,7 +5,7 @@ A simple ASP.NET Core Web API that fixes issues with dates being saved incorrect
 
 ---
 
-## 🐛 Problem: Naive Time Treated as UT
+## 🐛 Problem: Naive Time Treated as UTC
 - Angular often sends datetime values as "naive" (no timezone info), which .NET may interpret as UTC by default. This causes stored times to be incorrect, and when they come back to the browser, they appear shifted — often 2 hours earlier or later than expected.
 
 ```mermaid
