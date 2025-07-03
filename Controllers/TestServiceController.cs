@@ -13,7 +13,7 @@ namespace DateInputNormalizer.Controllers
         [HttpPost]
         [Route("api/[controller]/TestDateHandling")]
         [NormalizeDateInput]
-        public IActionResult TestDateHandling([FromBody] TestDateModel model, [FromHeader(Name = "X-Timezone")] string timeZone)
+        public IActionResult TestDateHandling(TestDateModel model, string timeZone)
         {
             return Ok(new
             {
@@ -25,7 +25,7 @@ namespace DateInputNormalizer.Controllers
 
         [HttpPost]
         [Route("api/[controller]/TestDateHandlingNoFilter")]
-        public IActionResult TestDateHandlingNoFilter([FromBody] TestDateModel model, [FromHeader(Name = "X-Timezone")] string timeZone)
+        public IActionResult TestDateHandlingNoFilter(TestDateModel model)
         {
             return Ok(new
             {
