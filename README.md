@@ -5,6 +5,61 @@ A simple ASP.NET Core Web API that fixes issues with dates being saved incorrect
 
 ---
 
+## 🐛 Problem: Naive Time Treated as UTC
+- Angular often sends datetime values as "naive" (no timezone info), which .NET may interpret as UTC by default. This causes stored times to be incorrect, and when they come back to the browser, they appear shifted — often 2 hours earlier or later than expected.
+
+```mermaid
+sequenceDiagram
+    title Bug: Naive Time Interpreted as UTC (Causes Time to Look Earlier)
+
+    participant User
+    participant Browser
+    participant API
+    participant Database
+
+    User->>Browser: Picks 10:00 (local time)
+    Browser->>API: Sends 10:00 (naive, no timezone info)
+    Note right of API: ❗ Assumes 10:00 is UTC instead of local
+    API->>Database: Saves 10:00 UTC (actually meant to be 10:00 local)
+    Database-->>API: Returns 10:00 UTC
+    API-->>Browser: Sends 10:00 UTC
+    Note right of Browser: ❗ Browser converts 10:00 UTC → 12:00 local<br>✅ Looks "later" than user intended
+
+    %% Reverse flow (rebinding a form)
+    Note over Browser,API: ➰ Now imagine this gets bound again in a form...
+    Browser->>API: Sends 12:00 (naive again)
+    API->>Database: Saves as 12:00 UTC
+    Note right of Database: ❗ This cycle shifts time forward each loop
+
+    %% OR: Bug from interpreting UTC as local on display
+    Note right of Browser: 🚨 In some cases (e.g. Date Picker), browser reads 10:00 UTC<br>as if it were local → converts it to UTC again = **08:00 displayed!**
+```
+
+## ✅ Solution: Normalize Input Using Timezone Header
+- We use a custom .NET ActionFilter to detect the user’s timezone via a request header (X-Timezone). It then correctly converts naive times to UTC before saving them. When returning UTC values to the UI, JavaScript can explicitly convert them back to local time using the same timezone.
+
+```mermaid
+sequenceDiagram
+    title Fix: Normalize to Correct UTC Using Timezone Header
+
+    participant User
+    participant Browser
+    participant API
+    participant Filter
+    participant Database
+
+    User->>Browser: Selects 10:00 (local time)
+    Browser->>API: Sends 10:00 (naive) + X-Timezone: Africa/Johannesburg
+    API->>Filter: Normalize to UTC (→ 08:00 UTC)
+    Filter->>API: Pass normalized UTC
+    API->>Database: Save 08:00 UTC
+    Database-->>API: Return 08:00 UTC
+    API-->>Browser: Send 08:00 UTC
+    Note right of Browser: JavaScript converts 08:00 UTC → 10:00 local
+    Browser->>User: Displays 10:00 (correct!)
+
+```
+
 ## ✅ What It Does
 
 - Accepts a time zone via `X-Timezone` (e.g. `Africa/Johannesburg`)
@@ -129,6 +184,23 @@ docker stop <container_id>
 ## 💡 Why It Matters
 
 ASP.NET APIs often treat dates as UTC unless told otherwise. This project ensures dates are saved and returned as the user expects — based on their actual time zone.
+
+---
+
+## Time Zones
+
+| Region               | IANA Timezone ID       | UTC Offset |
+|----------------------|------------------------|------------|
+| South Africa         | Africa/Johannesburg    | UTC+2      |
+| United Kingdom       | Europe/London          | UTC+0 / +1 (DST) |
+| United States (EST)  | America/New_York       | UTC-5 / -4 (DST) |
+| United States (PST)  | America/Los_Angeles    | UTC-8 / -7 (DST) |
+| Central Europe       | Europe/Berlin          | UTC+1 / +2 (DST) |
+| India                | Asia/Kolkata           | UTC+5:30   |
+| Japan                | Asia/Tokyo             | UTC+9      |
+| Australia (Sydney)   | Australia/Sydney       | UTC+10 / +11 (DST) |
+| Brazil (São Paulo)   | America/Sao_Paulo      | UTC-3      |
+| UAE                  | Asia/Dubai             | UTC+4      |
 
 ---
 
